@@ -469,13 +469,13 @@ def tokens_text(txt):
     return TokenStream(txt.split())
 
 
-def regex_lexer(*rx):
+def regex_lexer(*rx, **kwargs):
     """
     Splits string using a list of regexes
     special regex [0] matches whitespace
     """
-    skip = re.compile(rx[0])
-    rx = [re.compile(r) for r in rx[1:]]
+    skip = re.compile(kwargs.get('skip', r'\s+'))
+    rx = [re.compile(r) for r in rx]
 
     def tokens(t):
         while t:

@@ -15,8 +15,9 @@ def test_text_mismatch():
 
 def test_example():
     from parsnip import text, lift2, regex, sep, seq, tokens_gen, regex_lexer
-    lexer = regex_lexer(r'[\s\n]+', r'\(', r'\)', r'{', r'}', r',', r'[a-zA-Z_][a-zA-Z0-9_]*')
-    arg = regex(r'[a-zA-z][a-zA-Z0-9_]*', '<arg>')
+    lexer = regex_lexer(r'\(', r'\)', '{', '}', ',', '[a-zA-Z_][a-zA-Z0-9_]*',
+                        skip=r'[\s\n]+')
+    arg = regex('[a-zA-z][a-zA-Z0-9_]*', '<arg>')
     arglist = lift2(seq(text('('), sep(arg, text(',')), text(')')))
     body = lift2(seq(text('{'), text('pass'), text('}')))
     parser = seq(text('def'),
