@@ -1,6 +1,6 @@
 # Lord Parsnip
 
-![parsnip](https://github.com/krig/parsnip/blob/master/misc/lordparsnip.png "parsnip")
+![parsnip](https://raw.githubusercontent.com/krig/parsnip/master/misc/lordparsnip.png "parsnip")
 
 Combinatoric parser for Python.
 
