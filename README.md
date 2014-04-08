@@ -17,15 +17,27 @@ Mainly inspired by [parsec][1] and [jamon][2].
 ```python
 from parsnip import *
 
+
 labelled_list = seq(lift(regex(r'(\w+):')), many(regex(r'\w+')))
 
-labelled_list(tokens("words: foo bar wiz bang"))
+words = tokens("words: foo bar wiz bang")
+labelled_list(words)
 # => ['words', ['foo', 'bar', 'wiz', 'bang']]
 
-labelled_list(tokens("words foo bar wiz bang"))
+
+labelled_dict = mapfn(labelled_list, lambda a: {a[0]: a[1]})
+
+words = tokens("words: foo bar wiz bang")
+labelled_dict(words)
+# => {'words': ['foo', 'bar', 'wiz', 'bang']}
+
+
+malformed = tokens("foo bar wiz bang")
+labelled_dict(malformed)
 # =>
-#   NoMatch: Input: words, Expected: (\w+):
-#     Caused by: Input: words, Expected: (\w+):
+#   NoMatch: Input: foo, Expected: (\w+): [\w+ ...]
+#	    Caused by: Input: foo, Expected: (\w+):
+
 ```
 
 ### Lexing
