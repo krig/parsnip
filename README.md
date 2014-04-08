@@ -2,7 +2,13 @@
 
 ![parsnip](https://raw.githubusercontent.com/krig/parsnip/master/misc/lordparsnip.png "parsnip")
 
-Combinatoric parser for Python.
+Combinatoric parsers for Python. Useful for writing and combining tiny
+parsers, embedding micro-languages into other programs etc.
+
+Mainly inspired by [parsec][1] and [jamon][2].
+
+  [parsec]: http://www.haskell.org/haskellwiki/Parsec
+  [jamon]: https://github.com/gsson/jamon
 
 ## Examples
 
