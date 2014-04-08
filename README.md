@@ -19,10 +19,10 @@ from parsnip import *
 
 labelled_list = seq(lift(regex(r'(\w+):')), many(regex(r'\w+')))
 
-labelled_list(tokens_text("words: foo bar wiz bang"))
+labelled_list(tokens("words: foo bar wiz bang"))
 # => ['words', ['foo', 'bar', 'wiz', 'bang']]
 
-labelled_list(tokens_text("words foo bar wiz bang"))
+labelled_list(tokens("words foo bar wiz bang"))
 # =>
 #   NoMatch: Input: words, Expected: (\w+):
 #     Caused by: Input: words, Expected: (\w+):
@@ -45,7 +45,7 @@ fundef = seq(text('def'), name, arglist, body)
 print fundef.__doc__
 # => def <name> ( [<arg> [, <arg>] ...] ) { pass }
 
-print fundef(tokens_gen(lexer("""
+print fundef(tokens(lexer("""
 def foo(x, y, z) {
     pass
 }
@@ -66,7 +66,7 @@ fundef = seq(text('def'),
 
 fundef = maptags(fundef, lambda tags: tags)
 
-print fundef(tokens_gen(lexer("""
+print fundef(tokens(lexer("""
 def foo(x, y, z) {
     pass
 }
@@ -125,6 +125,7 @@ def foo(x, y, z) {
 
 ## Tokenizers
 
+* `tokens(x)` - return a token stream using _x_ as source
 * `tokens_list(list)` - _list_ is a list of tokens
 * `tokens_shlex(str)` - _str_ is tokenized using `shlex.split`
 * `tokens_text(str)` - _str_ is tokenized using `string.split`

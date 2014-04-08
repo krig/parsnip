@@ -505,9 +505,23 @@ def tokens_gen(g):
     return TokenStream([x for x in g])
 
 
-def parse(parser, tokens):
+def tokens(x):
+    """
+    Try to guess what type of token stream this is
+    """
+    if isinstance(x, basestring):
+        return tokens_text(x)
+    elif isinstance(x, list):
+        return tokens_list(x)
+    elif isinstance(x, TokenStream):
+        return x
+    else:
+        return tokens_gen(x)
+
+
+def parse(parser, ts):
     """
     Invokes the given parser on the given
     token stream.
     """
-    return parser(tokens)
+    return parser(ts)
