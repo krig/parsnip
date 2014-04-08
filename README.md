@@ -4,7 +4,21 @@
 
 Combinatoric parser for Python.
 
-## Example
+## Examples
+
+```python
+from parsnip import seq, regex, many, tokens_text
+
+labelled_list = seq(lift(regex(r'(\w+):')), many(regex(r'\w+')))
+
+labelled_list(tokens_text("words: foo bar wiz bang"))
+# => ['words', ['foo', 'bar', 'wiz', 'bang']]
+
+labelled_list(tokens_text("words foo bar wiz bang"))
+# =>
+#   NoMatch: Input: words, Expected: (\w+):
+#     Caused by: Input: words, Expected: (\w+):
+```
 
 ```python
 from parsnip import text, lift2, regex, sep, seq, tokens_gen, regex_lexer
@@ -67,6 +81,11 @@ def foo(x, y, z) {
 ## Mapping
 
 * `mapfn(parser, fn)` - when matched, _fn_ is called with output of _parser_ as parameter
+
+## Lifting
+
+* `lift(parser)` - return first element of list returned by _parser_ as result
+* `lift2(parser)` - return second element of list returned by _parser_ as result
 
 ## Tokenizers
 
