@@ -7,8 +7,8 @@ parsers, embedding micro-languages into other programs etc.
 
 Mainly inspired by [parsec][1] and [jamon][2].
 
-  [parsec]: http://www.haskell.org/haskellwiki/Parsec
-  [jamon]: https://github.com/gsson/jamon
+  [1]: http://www.haskell.org/haskellwiki/Parsec
+  [2]: https://github.com/gsson/jamon
 
 ## Examples
 
