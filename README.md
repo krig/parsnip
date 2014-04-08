@@ -6,8 +6,10 @@ Combinatoric parser for Python.
 
 ## Examples
 
+### Basic matching
+
 ```python
-from parsnip import seq, regex, many, tokens_text
+from parsnip import *
 
 labelled_list = seq(lift(regex(r'(\w+):')), many(regex(r'\w+')))
 
@@ -20,27 +22,54 @@ labelled_list(tokens_text("words foo bar wiz bang"))
 #     Caused by: Input: words, Expected: (\w+):
 ```
 
+### Lexing
+
 ```python
-from parsnip import text, lift2, regex, sep, seq, tokens_gen, regex_lexer
+from parsnip import *
+
 lexer = regex_lexer(r'\(', r'\)', '{', '}', ',', '[a-zA-Z_][a-zA-Z0-9_]*',
                     skip=r'[\s\n]+')
+name = regex('\w+', '<name>')
 arg = regex('[a-zA-z][a-zA-Z0-9_]*', '<arg>')
 arglist = lift2(seq(text('('), sep(arg, text(',')), text(')')))
 body = lift2(seq(text('{'), text('pass'), text('}')))
-parser = seq(text('def'),
-             regex('\w+', '<name>'),
-             arglist,
-             body)
 
-print parser.__doc__
+fundef = seq(text('def'), name, arglist, body)
+
+print fundef.__doc__
 # => def <name> ( [<arg> [, <arg>] ...] ) { pass }
 
-print parser(tokens_gen(lexer("""
+print fundef(tokens_gen(lexer("""
 def foo(x, y, z) {
     pass
 }
 """)))
 # => ['def', 'foo', ['x', 'y', 'z'], 'pass']
+```
+
+### Tagging
+
+```python
+
+# Using parsers from previous example...
+
+fundef = seq(text('def'),
+    tag(name, 'name'),
+    tag(arglist, 'args'),
+    tag(body, 'body'))
+
+fundef = maptags(fundef, lambda tags: tags)
+
+print fundef(tokens_gen(lexer("""
+def foo(x, y, z) {
+    pass
+}
+""")))
+
+# => {'name': 'foo',
+#     'args': ['x', 'y', 'z'],
+#     'body': 'pass'}
+
 ```
 
 # Documentation
@@ -76,7 +105,8 @@ def foo(x, y, z) {
 ## Tagging
 
 * `tag(parser, name)` - store output of _parser_ in tag _name_
-* `tagfn(parser, fn)` - when matched, _fn_ is called with a `dict` of tags as parameter
+* `tagfn(parser, name, fn)` - pass output of _parser_ through _fn_ and store in tag _name_
+* `maptags(parser, fn)` - when matched, _fn_ is called with a `dict` of tags as parameter
 
 ## Mapping
 
