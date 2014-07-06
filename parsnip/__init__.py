@@ -200,6 +200,14 @@ def lift2(parser):
     return plift2
 
 
+def liftNth(parser, n):
+    "lifts the Nth return value of parser"
+    @parsnip(doc=getdoc(parser))
+    def pliftNth(tok):
+        return parser(tok)[n]
+    return pliftNth
+
+
 def choice(*parsers):
     "try to match all until one matches"
     @parsnip(doc='(%s)' % (" | ".join(getdoc(p) for p in parsers)))
