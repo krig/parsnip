@@ -1,5 +1,8 @@
 # Lord Parsnip
 
+[![Build Status](https://travis-ci.org/krig/parsnip.svg)](https://travis-ci.org/krig/parsnip)
+[![Code Climate](https://codeclimate.com/github/krig/parsnip/badges/gpa.svg)](https://codeclimate.com/github/krig/parsnip)
+
 ![parsnip](https://raw.githubusercontent.com/krig/parsnip/master/misc/lordparsnip.png "parsnip")
 
 Combinatoric parsers for Python. Useful for writing and combining tiny
