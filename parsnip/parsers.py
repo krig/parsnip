@@ -24,7 +24,7 @@ def parsnip(doc=None):
         def run(tokens):
             try:
                 return parser(tokens)
-            except NoMatch, e:
+            except NoMatch as e:
                 if e.expected == parser.__doc__ or e.passthrough:
                     raise e
                 raise NoMatch(got=e.got,
@@ -76,7 +76,7 @@ def seq(*parsers):
         for p in parsers:
             try:
                 ret.append(p(tok))
-            except NoMatch, e:
+            except NoMatch as e:
                 prevtok = tok.getTokens(start, start + len(ret))
                 got = ' '.join(prevtok + [str(tok.peekCurrent())])
                 expected = ' '.join(prevtok + [p.__doc__])
@@ -147,7 +147,7 @@ def choiceConsumeAll(*parsers):
                                   expected=getdoc(p) + ' <END>',
                                   passthrough=True)
                 return ret
-            except NoMatch, e:
+            except NoMatch as e:
                 if e.passthrough:
                     raise e
                 lf, lt = tok.getLongestMatch()
@@ -293,7 +293,7 @@ def unless(p):
     def punless(tok):
         try:
             ret = p(tok)
-        except NoMatch, e:
+        except NoMatch as e:
             return e.got
         raise NoMatch(ret)
     return punless
