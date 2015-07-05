@@ -1,3 +1,4 @@
+import six
 import re
 from contextlib import contextmanager
 from functools import wraps
@@ -49,7 +50,7 @@ def text(txt):
 
 def regex(rx, doc=None, flags=re.I):
     "leaf parser: matches regex"
-    if isinstance(rx, basestring):
+    if isinstance(rx, six.string_types):
         if not rx.endswith('$'):
             rx = rx + '$'
         c = re.compile(rx, flags=flags)

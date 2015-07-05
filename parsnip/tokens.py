@@ -1,3 +1,4 @@
+import six
 import re
 
 from .errors import NoMatch
@@ -122,7 +123,7 @@ def tokens(x):
     """
     Try to guess what type of token stream this is
     """
-    if isinstance(x, basestring):
+    if isinstance(x, six.string_types):
         return tokens_text(x)
     elif isinstance(x, list):
         return tokens_list(x)
